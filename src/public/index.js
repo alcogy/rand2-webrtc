@@ -1,5 +1,22 @@
 'use strict'
 
+const btn = document.querySelector("#btn")
+const submit = document.querySelector("#submit")
+
+let dataChannel
+
+btn.addEventListener("click", () => {
+    btn.disabled = true
+    webRTC()
+})
+
+submit.addEventListener("click", () => {
+    if (dataChannel.readyState !== 'open') return
+    const text = document.querySelector("#text")
+    dataChannel.send(text.value)
+    text.value = ''
+})
+
 async function webRTC() {
     const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true })
     const me = document.querySelector("#me")
@@ -9,6 +26,8 @@ async function webRTC() {
     stream.getTracks().forEach(track => {
         peer.addTrack(track, stream)
     })
+    
+    dataChannel = peer.createDataChannel('datachannel')
     
     const ws = new WebSocket('ws://localhost:9999')
     ws.onopen = async () => {
@@ -64,14 +83,33 @@ async function webRTC() {
         video.srcObject = stream
     })
 
+    dataChannel.addEventListener('open', e => {
+       // TODO: implement opend event. 
+    });
+    
+
+    peer.addEventListener('datachannel', e => {
+        const remoteDataChannel = e.channel;
+        remoteDataChannel.addEventListener('message', e => {
+            console.log('Receive message from data channel: ', e.data)
+        });
+    });
+
     const createVideoElement = () => {
+        // TODO: Transfer to correct place
         const message = document.querySelector("#message")
         message.style.display = 'none'
+        const textWrap = document.querySelector("#textWrap")
+        textWrap.style.visibility = 'visible'
+        // -- 
+
         const video = document.createElement("video")
         video.srcObject = stream
         video.autoplay = true
         const wrap = document.querySelector("#wrap")
         wrap.appendChild(video)
     }
+
+     
 }
 

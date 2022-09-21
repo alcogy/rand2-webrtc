@@ -80,3 +80,32 @@ h1 {
     flex: 1;
     font-size: 1.2rem;
 }
+
+.text-wrap {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-top: 15px;
+    visibility: hidden;
+}
+
+.text {
+    background-color: #3a3a3a;
+    border: 1px solid #555;
+    padding: 0 12px;
+    color: #ddd;
+    letter-spacing: 1px;
+    width: 240px;
+    height: 30px;
+    vertical-align: middle;
+    border-radius: 6px;
+}
+
+.submit {
+    background-color: #9240b0;
+    color: #eee;
+    height: 32px;
+    border-radius: 15px;
+    padding: 0 15px;
+    cursor: pointer;
+}
