@@ -6,10 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WebRTC</title>
     <script src="index.js"></script>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<button id="btn">Start</button>
-<div id="wrap"></div>
+    <h1>WebRTC Reserch</h1>
+    <div class="me-wrap">
+        <div class="me-video-wrap">
+            <video id="me" autoplay muted></video>
+        </div>
+        <button id="btn" class="btn-start">CONNECT</button>
+    </div>
+    <div id="wrap" class="connected-video-wrap">
+        <p class="message" id="message">No connection.</p>
+    </div>
+    
 <script>
     const btn = document.querySelector("#btn")
     btn.addEventListener("click", () => {

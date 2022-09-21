@@ -2,6 +2,8 @@
 
 async function webRTC() {
     const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+    const me = document.querySelector("#me")
+    me.srcObject = stream
     const peer = new RTCPeerConnection()
             
     stream.getTracks().forEach(track => {
@@ -26,6 +28,7 @@ async function webRTC() {
             break
 
             case 'answer':
+                // TODO: Change correctly.
                 createVideoElement() 
                 const sdpAnswer = new RTCSessionDescription(data)
                 await peer.setRemoteDescription(sdpAnswer)
@@ -49,6 +52,7 @@ async function webRTC() {
 
     peer.addEventListener('icegatheringstatechange', (e) => {
         if (peer.iceGatheringState === 'new') {
+            // TODO: Change correctly.
             createVideoElement()
         }
     })
@@ -61,10 +65,12 @@ async function webRTC() {
     })
 
     const createVideoElement = () => {
+        const message = document.querySelector("#message")
+        message.style.display = 'none'
         const video = document.createElement("video")
         video.srcObject = stream
         video.autoplay = true
-        const wrap = document.getElementById("wrap")
+        const wrap = document.querySelector("#wrap")
         wrap.appendChild(video)
     }
 }
