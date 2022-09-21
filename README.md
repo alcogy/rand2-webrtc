@@ -1,4 +1,4 @@
-## WebRTC-Reserch
+## WebRTC-Research
 This repository is research for webRTC.<br>
 It has builded video chat app and signaling server (by websocket).
 
